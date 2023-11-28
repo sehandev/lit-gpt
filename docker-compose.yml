@@ -1,0 +1,22 @@
+services:
+  dev:
+    image: sehandev/pytorch:2.1.1-cuda12.1-cudnn8-runtime
+    command: bash
+    volumes:
+      - .:/workspace
+      - /data/sdkim/checkpoints:/workspace/checkpoints
+    environment:
+      WANDB_API_KEY: "194b933d960c29afd5d4e728e945e93a20e2a6f2"
+      HF_ACCESS_TOKEN: "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"
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # device_ids: [ '0', '1', '2', '3', '4', '5', '6', '7' ]
+              device_ids: [ '3', '4', '5', '6', '7' ]
+              capabilities: [ gpu ]
+    stdin_open: true
+    tty: true
+    ipc: host
